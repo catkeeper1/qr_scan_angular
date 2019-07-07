@@ -1,0 +1,15 @@
+<h2>QR code scanner</h2>
+<div>
+    <video #scaningVideo
+    id="video"
+    width="300"
+    height="300"
+    style="border: 1px solid gray">
+    </video>
+</div>
+<div>device: <select #deviceList></select></div>
+<div>
+    <span class="button" (click)="startScan()">start</span>
+    <span class="button" (click)="cancelScan()">cancel</span>
+
+</div>
