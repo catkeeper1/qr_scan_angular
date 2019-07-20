@@ -14,6 +14,8 @@ export class QrScannerComponent implements OnInit, AfterViewInit {
 
   @ViewChild('deviceList', {static: false}) deviceList: ElementRef;
 
+  @ViewChild('qrCodeDisplay', {static: false}) qrCodeDisplay: ElementRef;
+
   codeReader: BrowserQRCodeReader;
 
   constructor() { }
@@ -60,6 +62,8 @@ export class QrScannerComponent implements OnInit, AfterViewInit {
       video: { width: 300, height: 300, deviceId: devId }
     };
 
+    var qrDisplay = this.qrCodeDisplay;
+
     navigator.mediaDevices.getUserMedia(mediaConstrains)
       .then(function(stream) {
         videoElement.srcObject = stream;
@@ -68,6 +72,8 @@ export class QrScannerComponent implements OnInit, AfterViewInit {
         cdReader.decodeFromVideoElement(videoElement)
                 .then(result => {
                   console.log(result.getText());
+
+                  qrDisplay.nativeElement.innerHTML = result.getText();
                   cdReader.reset();
                 })
                 .catch(err => console.error(err));
@@ -89,7 +95,7 @@ export class QrScannerComponent implements OnInit, AfterViewInit {
   }
 
   cancelScan() {
-    
+    this.qrCodeDisplay.nativeElement.innerHTML = "";
     this.codeReader.reset();
 
   }
